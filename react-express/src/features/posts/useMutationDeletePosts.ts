@@ -14,22 +14,24 @@ export const useDeletePosts = () => {
     const mutate = async (id: string) => {
         setState(prev => ({ ...prev, loading: true }))
 
-        axiosInstance.delete(`/posts/${id}`).then(response => {
-            setState(prev => ({
-                ...prev,
-                data: response.data,
-                loading: false,
-                error: null,
-                message: response.data.message,
-                status: response.data.status,
-            }))
-        }).catch(error => {
+        try {
+            const response = await axiosInstance.delete(`/posts/${id}`)
+                setState(prev => ({
+                    ...prev,
+                    data: response.data,
+                    loading: false,
+                    error: null,
+                    message: response.data.message,
+                    status: response.data.status,
+                }))
+            
+        } catch (error) {
             setState(prev => ({
                 ...prev,
                 loading: false,
                 error: error instanceof Error ? error : new Error('An unknown error occurred'),
             }))
-        })
+        }
     }
 
     return {
