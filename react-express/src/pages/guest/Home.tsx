@@ -11,9 +11,9 @@ export default function Home() {
     const { data } = usePosts()
     const [ updateID, setUpdateID ] = useState<string>("")
     const [ updateContent, setUpdateContent ] = useState<string>("")
-    const { createPost } = useCreatePosts()
-    const { deletePost } = useDeletePosts()
-    const { updatePosts } = useUpdatePosts()
+    const { mutate: createPost } = useCreatePosts()
+    const { mutate: deletePost } = useDeletePosts()
+    const { mutate: updatePosts } = useUpdatePosts()
 
     const inputSchema = z.object({
         content: z

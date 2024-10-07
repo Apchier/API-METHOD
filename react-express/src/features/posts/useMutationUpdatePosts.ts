@@ -11,27 +11,27 @@ export const useUpdatePosts = () => {
         status: '',
     });
 
-    const updatePosts = async (id: string, content: string) => {
-        setState(prev => ({ ...prev, loading: true }));
-        try {
-            const response = await axiosInstance.put(`/posts/${id}`, { content });
+    const mutate = async (id: string, content: string) => {
+        setState(prev => ({ ...prev, loading: true }))
+
+        axiosInstance.put(`/posts/${id}`, { content }).then(response => {            
             setState(prev => ({
                 ...prev,
                 data: response.data,
                 loading: false,
                 error: null,
-            }));
-        } catch (error) {
+            }))
+        }).catch(error => {
             setState(prev => ({
                 ...prev,
                 loading: false,
-                error: error instanceof Error ? error.message : 'An error occurred while creating the post',
-            }));
-        }
+                error: error instanceof Error ? error : new Error('An unknown error occurred'),
+            }))
+        })
     }
 
     return { 
         ...state,
-        updatePosts
+        mutate
     }
 }

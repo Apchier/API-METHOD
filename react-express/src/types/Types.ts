@@ -13,7 +13,7 @@ export type PostsResponse = {
     mutate: (data: Posts) => Promise<void>;
     data?: Posts | null
     loading?: boolean
-    error: string | null
+    error: Error | null
     message: string
     status: string
 }
